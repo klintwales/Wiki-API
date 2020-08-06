@@ -33,6 +33,8 @@ app.get("/articles", function(req, res){
   });
 });
 
+app.route("/articles").get().post().delete();
+
 app.post("/articles", function(req, res){
   console.log(req.body.title);
   console.log(req.body.content);
@@ -50,6 +52,16 @@ app.post("/articles", function(req, res){
     };
   });
 
+});
+
+app.delete("/articles", function(req, res){
+  Article.deleteMany(function(err){
+    if(!err){
+      res.send("Deleted all articles");
+    }else{
+        res.send(err);
+    }
+  });
 });
 
 app.listen(3000, function() {
