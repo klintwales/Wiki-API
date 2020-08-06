@@ -77,7 +77,7 @@ app.route("/articles/:articleTitle")
     }else{
       res.send(err);
     }
-  })
+  });
 })
 
 .put(function(req, res){
@@ -90,10 +90,34 @@ app.route("/articles/:articleTitle")
         res.send("Successfullly updated article");
       }
     }
-  )
+  );
 })
 
-.delete();
+.patch(function(req, res){
+  Article.update(
+    {title: req.params.articleTitle},
+    {$set: req.body},
+    function(err){
+      if(!err){
+        res.send("Successfullly updated article");
+      }else{
+        res.send(err);
+      }
+    }
+  );
+})
+
+.delete(function(req, res){
+  Article.deleteOne(
+    {title: req.params.articleTitle},
+    function(err){
+    if(!err){
+      res.send("Deleted article successfullly");
+    }else{
+        res.send(err);
+    }
+  });
+});
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
